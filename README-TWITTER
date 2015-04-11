@@ -1,0 +1,18 @@
+1.
+/usr/local/lib/python2.7/dist-packages/requests/packages/urllib3/util/ssl_.py:79: InsecurePlatformWarning: A true SSLContext object is not available. This prevents urllib3 from configuring SSL appropriately and may cause certain SSL connections to fail. For more information, see https://urllib3.readthedocs.org/en/latest/security.html#insecureplatformwarning.
+  InsecurePlatformWarning
+
+	you can downgrade your 'requests' version to 2.5.3:
+
+	sudo pip install requests==2.5.3
+
+2.
+	pip install tweepy
+
+3.authorize an app on twitter and get access and consumer keys and secrets
+
+4.pip install redis
+
+am adaugat niste stopwords in plus pt ca imi tot baga linkuri
+cam greu a fost sa aleg un regex corect care sa dea rezultate relevante
+TWITTER DA 401 CAND AI CEASU INAINTE FUCK MY LIFE

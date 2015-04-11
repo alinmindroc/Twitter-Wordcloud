@@ -18,7 +18,8 @@ stopwords_file_path = 'stopwords.txt'
 
 #start a global connection to a local redis server
 try:
-	redis_instance = redis.StrictRedis(host='localhost', port=6379, db=0)
+	redis_instance = redis.StrictRedis(host='172.17.0.13', port=6379, db=0)
+	#redis_instance = redis.StrictRedis(host='localhost', port=6379, db=0)
 	redis_instance.info()
 except:
 	print 'Could not connect to a local redis server, exiting...'
@@ -49,6 +50,12 @@ class FilterListener(tweepy.StreamListener):
 		#save a list of words together with their occurence count to the redis cache
 		for w in word_list:
 			redis_instance.incr(w)
+
+	def on_timeout(self):
+		print 'timed out'
+
+	def on_error(self, status_code):
+		print 'error code %s' % status_code
 
 def print_help(stream):
 	print 'usage: ./wordcloud.py [seconds_of_streaming] [no_of_words]'
