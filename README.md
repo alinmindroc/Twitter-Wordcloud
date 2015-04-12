@@ -14,7 +14,7 @@ and set them in [wordcloud.py](wordcloud_files/wordcloud.py) at lines 12-16.
 (this will download the docker images for redis and python:2.7.9)  
 
 1. Install docker and docker-compose
-2. To run the app with the default args: `sudo docker-compose up` (this will gather data for a second from the stream and print the first 4 words ordered by occurence count)
+2. To run the app with the default args: `sudo docker-compose up` (this will gather data for a second from the stream and print the first 4 words ordered by occurence count, by running the command in [docker-compose.yml](docker-compose.yml))
 3. To run the app with custom command line args, you can use  
   `sudo docker-compose run web ./wordcloud.py [seconds_of_streaming] [max_words]`
 
