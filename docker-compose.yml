@@ -1,0 +1,7 @@
+web:
+  build: .
+  command: ./wordcloud.py 5 4
+  links:
+    - redis
+redis:
+  image: redis

@@ -6,23 +6,26 @@ import sys
 import json
 import signal
 import redis
+import os
 
 #secret keys
-consumer_key ="INSERT CONSUMER KEY HERE"
-consumer_secret ="INSERT CONSUMER SECRET HERE"
+consumer_key ="JTFpeYyEkWSxWpiswY7QtJ7OH"
+consumer_secret ="4RwpbR2WyUMDzEiZT1vWrv5YPM8uE2OZpsuRpIFQ6EtEwX6zRF"
 
-access_token ="INSERT ACCESS TOKEN HERE"
-access_token_secret ="INSERT ACCESS TOKEN SECRET HERE"
+access_token ="2491903045-uvJkmgD1BSx5QkiJqPU77nesyVhpY9KM2mshOoN"
+access_token_secret ="quoULDWcS7afIr40JbbvtbU652rm28MH6BxY7PGiKRdRd"
 
 stopwords_file_path = 'stopwords.txt'
 
+redis_host = os.environ['REDIS_PORT_6379_TCP_ADDR']
+redis_port = 6379
+
 #start a global connection to a local redis server
 try:
-	redis_instance = redis.StrictRedis(host='172.17.0.13', port=6379, db=0)
-	#redis_instance = redis.StrictRedis(host='localhost', port=6379, db=0)
+	redis_instance = redis.Redis(host=redis_host, port=redis_port)
 	redis_instance.info()
 except:
-	print 'Could not connect to a local redis server, exiting...'
+	print 'Could not connect to the redis server, exiting...'
 	exit(-1)
 
 #flush the current redis database so that results won't get mixed up between
