@@ -8,12 +8,11 @@ import signal
 import redis
 import os
 
-#secret keys
-consumer_key ="insert your consumer key here"
-consumer_secret ="insert your consumer secret here"
-
-access_token ="insert your access token here"
-access_token_secret ="insert your access token secret here"
+#twitter auth keys
+consumer_key ="JTFpeYyEkWSxWpiswY7QtJ7OH"
+consumer_secret ="4RwpbR2WyUMDzEiZT1vWrv5YPM8uE2OZpsuRpIFQ6EtEwX6zRF"
+access_token ="2491903045-uvJkmgD1BSx5QkiJqPU77nesyVhpY9KM2mshOoN"
+access_token_secret ="quoULDWcS7afIr40JbbvtbU652rm28MH6BxY7PGiKRdRd"
 
 stopwords_file_path = 'stopwords.txt'
 
