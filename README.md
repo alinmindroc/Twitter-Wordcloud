@@ -14,7 +14,7 @@ and set them in [wordcloud.py](wordcloud_files/wordcloud.py) at lines 12-16
 (this will download the docker images for redis and python:2.7.9)  
 
 1. Install docker and docker-compose
-2. To run the app with the default args: `sudo docker-compose up` (this will gather data for a second from the stream and print it)
+2. To run the app with the default args: `sudo docker-compose up` (this will gather data for a second from the stream and print the first 4 words ordered by occurence count)
 3. To run the app with custom command line args, you can use  
   `sudo docker-compose run web ./wordcloud.py [seconds_of_streaming] [max_words]`
 
@@ -25,5 +25,5 @@ and set them in [wordcloud.py](wordcloud_files/wordcloud.py) at lines 12-16
 3. Install tweepy `pip install tweepy`
 4. Start the redis server
 5. Replace the value of the redis host at line 20 in [wordcloud.py](wordcloud_files/wordcloud.py) with the IP of the redis server. You can use 'localhost' if the server is local.
-5. Run `/wordcloud.py [seconds_of_streaming] [max_words]`
+5. Run `./wordcloud.py [seconds_of_streaming] [max_words]`
 
