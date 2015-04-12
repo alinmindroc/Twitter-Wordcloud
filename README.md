@@ -8,7 +8,7 @@ occurence count for every word in the stream or for a number of words specified 
 The app is enclosed in a docker container and uses docker-compose to communicate with a redis server which is running in another docker container.
 
 To use the app, you have to [register a twitter app](https://apps.twitter.com/app/new) to get a consumer key and access token for accessing the stream,
-and set them in [wordcloud.py](wordcloud_files/wordcloud.py) at lines 12-16.
+and set them in [wordcloud.py](wordcloud_files/wordcloud.py) at lines 12-15.
 
 #### How to run the app inside the docker container:
 (this will download the docker images for redis and python:2.7.9)  
@@ -24,6 +24,6 @@ and set them in [wordcloud.py](wordcloud_files/wordcloud.py) at lines 12-16.
 2. Install redis `pip install redis` (python 2.7.9 comes with pip)
 3. Install tweepy `pip install tweepy`
 4. Start the redis server
-5. Replace the value of the redis host at line 20 in [wordcloud.py](wordcloud_files/wordcloud.py) with the IP of the redis server. You can use 'localhost' if the server is local.
+5. Replace the value of the redis host at line 19 in [wordcloud.py](wordcloud_files/wordcloud.py) with the IP of the redis server. You can use 'localhost' if the server is local.
 5. Run `./wordcloud.py [seconds_of_streaming] [max_words]`
 
