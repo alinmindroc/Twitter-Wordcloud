@@ -14,12 +14,11 @@ consumer_secret ="4RwpbR2WyUMDzEiZT1vWrv5YPM8uE2OZpsuRpIFQ6EtEwX6zRF"
 access_token ="2491903045-uvJkmgD1BSx5QkiJqPU77nesyVhpY9KM2mshOoN"
 access_token_secret ="quoULDWcS7afIr40JbbvtbU652rm28MH6BxY7PGiKRdRd"
 
-stopwords_file_path = 'stopwords.txt'
-
+#redis server address
 redis_host = os.environ['REDIS_PORT_6379_TCP_ADDR']
 redis_port = 6379
 
-#start a global connection to a local redis server
+#try to start a global connection to a redis server and connect to it
 try:
 	redis_instance = redis.Redis(host=redis_host, port=redis_port)
 	redis_instance.info()
@@ -31,28 +30,29 @@ except:
 #different runs of the script
 redis_instance.flushdb()
 
-#define a stream listener which will output and filter to file
+#define a stream listener which will output and filter data and store it in redis
 class FilterListener(tweepy.StreamListener):
 	def __init__(self):
 		super(FilterListener, self).__init__()
 
 	def on_status(self, status):
-		#called when a new status is available, splits it in words and persist those
-		#which are not stopwords
+		#called when a new twitter status is available, splits it in words and persists
+		#those which are not stopwords
 		words = re.findall(r'[a-zA-Z\']+', status.text)
 		filtered_words = [w.lower() for w in words if w.lower() not in self.stopwords]
 		self.persist(filtered_words)
 
 	def set_stopwords(self, filename):
-		#get a list of stopwords from a file
+		#set the list of stopwords from a file
 		stopwords_file = open(filename, 'r')
 		self.stopwords = stopwords_file.read().splitlines()
 
 	def persist(self, word_list):
-		#save a list of words together with their occurence count to the redis cache
+		#save a list of words together with their occurence count in the redis cache
 		for w in word_list:
 			redis_instance.incr(w)
 
+	#error checking
 	def on_timeout(self):
 		print 'timed out'
 
@@ -65,10 +65,14 @@ def print_help(stream):
 	sys.exit(-1)
 
 if __name__ == '__main__':
-	#get authorized to make requests
+	#get authorized to make requests to the twitter stream
 	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 	auth.set_access_token(access_token, access_token_secret)
 	api = tweepy.API(auth)
+
+	#path to a file containing stopwords used to differentiate between relevant
+	#and irelevant words in the stream
+	stopwords_file_path = 'stopwords.txt'
 
 	#instantiate the custom listener
 	filterListener = FilterListener()
@@ -83,8 +87,8 @@ if __name__ == '__main__':
 	#at this line
 	myStream.sample(languages=['en'], async=True)
 
-	#define and set a sigint handler which kills the stream thread first
-	#and then quits from the main thread. Without this, the stream thread
+	#define and set a SIGINT handler which gracefully kills the stream thread
+	#first and then quits from the main thread. Without this, the stream thread
 	#would run forever
 	def signal_handler(*args):
 		myStream.disconnect()
@@ -92,6 +96,7 @@ if __name__ == '__main__':
 
 	signal.signal(signal.SIGINT, signal_handler)
 
+	#number of maximum words to output to JSON
 	max_words = None
 
 	#validate command line arguments
@@ -111,17 +116,19 @@ if __name__ == '__main__':
 	else:
 		print_help(myStream)
 
-	#gather tweets from the stream for <delay> seconds
+	#gather tweets from the stream for <delay> seconds:
+	#here, the main thread will sleep and the gather thread will store data
 	time.sleep(delay)
 
-	#close the stream
+	#terminate the stream thread after the delay
 	myStream.disconnect()
 
-	#create a map based on the command line options
+	#create a result list based on the redis data
 	json_list = []
 	for key in redis_instance.keys():
 		json_list.append({'word':key, 'count':int(redis_instance.get(key))})
 
+	#output the result according to the command line args
 	if max_words is None:
 		json_obj = json_list
 	else:

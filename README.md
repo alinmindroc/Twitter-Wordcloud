@@ -18,7 +18,7 @@ and set them in [wordcloud.py](wordcloud_files/wordcloud.py) at lines 12-15.
 3. To run the app with custom command line args, you can use  
   `sudo docker-compose run web ./wordcloud.py [seconds_of_streaming] [max_words]`
 
-#### How to run the app locally (without docker):
+#### How to build the app locally (without docker):
 
 1. Make sure you have python version 2.7.9 installed. For older versions, use `pip install requests[security]` so that the requests done by urllib3 won't throw security exceptions.
 2. Install redis `pip install redis` (python 2.7.9 comes with pip)
