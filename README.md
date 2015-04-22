@@ -1,5 +1,4 @@
 # twitter_wordcloud
-###### Homework for Hootsuite internship
 
 This is a python app which gets data from the [Twitter Sample Stream](https://dev.twitter.com/streaming/reference/get/statuses/sample) and returns the
 occurence count for every word in the stream or for a number of words specified by the user in JSON format. It can be used as the backend for a
