@@ -19,7 +19,7 @@ and set them in [wordcloud.py](wordcloud_files/wordcloud.py) at lines 12-15.
 
 #### How to build the app locally (without docker):
 
-1. Make sure you have python version 2.7.9 installed. For older versions, use `pip install requests[security]` so that the requests done by urllib3 won't throw security exceptions.
+1. Make sure you have python version 2.7.9 installed. For older versions, use `pip install requests[security]` so that the requests made by urllib3 won't throw security exceptions.
 2. Install redis `pip install redis` (python 2.7.9 comes with pip)
 3. Install tweepy `pip install tweepy`
 4. Start the redis server
